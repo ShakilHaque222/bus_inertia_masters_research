@@ -116,7 +116,7 @@ def simulate_frequency(A, B, delta_P_pu, t_span=(0, 20), dt=0.01):
         u = delta_P_pu if t >= t_fault else 0.0
         return A @ x + B.flatten() * u
 
-    t_eval = np.arange(t_span[0], t_span[1] + dt, dt)
+    t_eval = np.linspace(t_span[0], t_span[1], int((t_span[1] - t_span[0]) / dt) + 1)
     sol = solve_ivp(ode, t_span, np.zeros(A.shape[0]),
                     t_eval=t_eval, method="RK45",
                     rtol=1e-6, atol=1e-8)
